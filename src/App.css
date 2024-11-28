@@ -1,38 +1,296 @@
-.App {
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+h1, h2, h3, p {
+  margin-bottom: 15px;
+}
+
+/* Main App Container */
+.app {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 10px;
+  padding: 15px;
+}
+
+header, footer {
+  background-color: #007bff;
+  color: white;
   text-align: center;
+  padding: 10px 15px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+footer button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+footer button:hover {
+  background-color: #0056b3;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Panel Styling */
+.left-panel, .center-panel, .right-panel {
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+
+.left-panel table, .right-panel table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+.left-panel th, .left-panel td,
+.right-panel th, .right-panel td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.left-panel th, .right-panel th {
+  background-color: #007bff;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* Center Panel & Image Viewer */
+.center-panel #main-viewer,
+.right-panel #zoomed-out-view {
+  width: 100%;
+  height: 200px;
+  background-color: #e0e0e0;
+  border: 2px dashed #ccc;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Image Viewer Zoom Controls */
+.panel-content {
+  text-align: center;
+}
+
+.viewer {
+  position: relative;
+  width: 80%; /* Adjust width as needed */
+  height: 300px; /* Adjust height as needed */
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid #ccc;
+}
+
+/* Center Panel & Image Viewer */
+.center-panel #main-viewer {
+  position: relative;  /* Ensures proper positioning of the image */
+  width: 100%;
+  height: 300px;
+  background-color: #e0e0e0;
+  border: 2px dashed #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevents overflow of image */
+}
+
+/* The Image to Zoom */
+.center-panel .viewer img {
+  position: absolute; /* Absolute position to allow precise control */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the image */
+  width: 100%; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Zoom Controls */
+.zoom-controls {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.zoom-controls button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.zoom-controls button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.zoom-controls button:focus {
+  outline: 2px solid #ffcc00;
+  outline-offset: 2px;
+}
+
+
+
+/* Responsive Styles */
+
+/* For Large Screens (1024px and above) */
+@media (min-width: 1024px) {
+  .main-container {
+    grid-template-columns: 1fr 2fr 1fr;
   }
-  to {
-    transform: rotate(360deg);
+
+  .center-panel, .left-panel, .right-panel {
+    padding: 20px;
   }
+
+  .viewer {
+    width: 100%;
+    height: 500px;
+  }
+
+  .zoom-controls {
+    gap: 15px;
+  }
+
+  footer button {
+    padding: 12px 24px;
+    font-size: 18px;
+  }
+}
+
+/* For Tablets (768px to 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .main-container {
+    grid-template-columns: 1fr 2fr; /* 2-column layout for tablets */
+  }
+
+  .viewer {
+    width: 100%;
+    height: 100%;
+  }
+
+  .zoom-controls {
+    gap: 12px;
+  }
+
+  footer button {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+}
+
+/* For Mobile (Below 768px) */
+@media (max-width: 768px) {
+  .main-container {
+    grid-template-columns: 1fr; /* Single column layout for mobile */
+  }
+
+  header, footer {
+    padding: 10px;
+  }
+
+  .viewer {
+    width: 100%;
+    height: 300px; 
+  }
+
+  .zoom-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .zoom-controls button {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+
+  footer button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  /* Ensure all elements fit properly on mobile */
+  .panel-content, .center-panel, .left-panel, .right-panel {
+    padding: 15px;
+  }
+
+  .left-panel, .right-panel {
+    box-shadow: none;
+    margin-bottom: 15px;
+  }
+}
+/*  */
+/* RightPanel CSS */
+.panel-content {
+  text-align: center;
+  padding: 15px;
+  margin-top: 15%;
+}
+
+.hub-view {
+  position: relative;
+  margin-top: 20px;
+}
+
+.zoomed-out {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.zoomed-out h4 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.zoomed-out p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.zoomed-out-image {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.zoomed-out-img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.pointer {
+  position: absolute;
+  border: 2px solid red;  /* Customize pointer style */
+  background-color: rgba(255, 0, 0, 0.2);  /* Pointer color */
 }
